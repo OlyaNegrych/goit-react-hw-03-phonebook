@@ -19,13 +19,15 @@ class App extends Component {
 
   componentDidMount() {
     const contacts = JSON.parse(localStorage.getItem('contacts'));
-    this.setState({ contacts: contacts });
+    if (contacts) {
+      this.setState({ contacts: contacts });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.contacts !== prevState.contact) {
-  localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-}
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
   }
 
   handleSubmit = ({ name, number }) => {
@@ -67,11 +69,11 @@ class App extends Component {
   render() {
     return (
       <>
-        <Section title='Phonebook'>
+        <Section title="Phonebook">
           <ContactForm onFormSubmit={this.handleSubmit} />
         </Section>
 
-        <Section title='Contacts'>
+        <Section title="Contacts">
           {' '}
           <Filter onChange={this.onFilterChange} value={this.state.filter} />
           <ContactList
@@ -84,6 +86,4 @@ class App extends Component {
   }
 }
 
-
 export default App;
-
